@@ -18,6 +18,8 @@ import AuthorProfile from '../pages/author/AuthorProfile';
 import AuthorAddCourse from '../pages/author/AuthorAddCourse';
 import AuthorEditCourse from '../pages/author/AuthorEditCourse';
 import MyCourses from '../pages/MyCourses';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,14 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-
+      {
+        path: 'about',
+        element: <About />,
+      },
+      {
+        path: 'contact',
+        element: <Contact />,
+      },
       {
         path: 'courses',
         element: <Courses />,
