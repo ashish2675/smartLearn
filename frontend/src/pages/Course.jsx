@@ -187,48 +187,6 @@ const Course = () => {
                   </div>
                 </li>
               ))}
-              {course.sections.map((s, i) => (
-                <li
-                  key={i}
-                  className='flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100'
-                >
-                  <div className='w-12 h-12 rounded-md bg-purple-600 text-white flex justify-center items-center'>
-                    {i + 1}
-                  </div>
-                  <div>
-                    <small className='text-xs'>Part {i + 1}</small>
-                    <p className='text-lg capitalize'>{s.sectionTitle}</p>
-                  </div>
-                </li>
-              ))}
-              {course.sections.map((s, i) => (
-                <li
-                  key={i}
-                  className='flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100'
-                >
-                  <div className='w-12 h-12 rounded-md bg-purple-600 text-white flex justify-center items-center'>
-                    {i + 1}
-                  </div>
-                  <div>
-                    <small className='text-xs'>Part {i + 1}</small>
-                    <p className='text-lg capitalize'>{s.sectionTitle}</p>
-                  </div>
-                </li>
-              ))}
-              {course.sections.map((s, i) => (
-                <li
-                  key={i}
-                  className='flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100'
-                >
-                  <div className='w-12 h-12 rounded-md bg-purple-600 text-white flex justify-center items-center'>
-                    {i + 1}
-                  </div>
-                  <div>
-                    <small className='text-xs'>Part {i + 1}</small>
-                    <p className='text-lg capitalize'>{s.sectionTitle}</p>
-                  </div>
-                </li>
-              ))}
             </ul>
           </>
         ) : null}
