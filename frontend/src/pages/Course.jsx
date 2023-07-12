@@ -49,11 +49,11 @@ const Course = () => {
   }, [courseId, dispatch, user._id]);
 
   useEffect(() => {
-    if (course) {
+    if (course && user && user?._id) {
       const enrolled = course.enrolledUsers.find((u) => u === user._id);
       enrolled && setIsEnrolled(true);
     }
-  }, [course, user._id]);
+  }, [course, user]);
 
   console.log('enrolled: ', isEnrolled);
 

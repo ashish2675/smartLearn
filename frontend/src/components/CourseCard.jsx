@@ -3,6 +3,7 @@ import { BookmarkIcon, StarIcon } from '@heroicons/react/24/outline';
 import { BookmarkIcon as SolidBookMarkIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import {
   addToWishList,
   getWishList,
@@ -10,6 +11,9 @@ import {
 } from '../services/lib/user';
 
 const CourseCard = ({ c }) => {
+  const {
+    state: { user },
+  } = useAuth();
   const [isWishListed, setIsWishListed] = useState(false);
   const { pathname } = useLocation();
 
@@ -19,7 +23,7 @@ const CourseCard = ({ c }) => {
         ? await removeFromWishList(c._id)
         : await addToWishList(c._id);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.status === 200) {
         console.log(pathname);
@@ -39,12 +43,12 @@ const CourseCard = ({ c }) => {
       try {
         const res = await getWishList();
 
-        console.log(res);
+        // console.log(res);
 
         let list = res.data;
         const isFound = list.find((l) => l._id === c._id);
 
-        console.log('found: ', isFound);
+        // console.log('found: ', isFound);
 
         if (isFound) {
           setIsWishListed(true);
@@ -53,8 +57,8 @@ const CourseCard = ({ c }) => {
         console.log(error.response);
       }
     };
-    checkIsWishlisted();
-  }, [c._id]);
+    user?._id && checkIsWishlisted();
+  }, [c._id, user]);
 
   return (
     <div>
