@@ -26,7 +26,7 @@ const CourseCard = ({ c }) => {
       // console.log(res);
 
       if (res.status === 200) {
-        console.log(pathname);
+        // console.log(pathname);
         setIsWishListed(!isWishListed);
       }
 
