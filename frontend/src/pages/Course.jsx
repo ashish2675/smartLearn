@@ -36,7 +36,7 @@ const Course = () => {
       dispatch(startLoading());
       try {
         const res = await getCourse(courseId);
-        console.log(res);
+        // console.log(res);
         setCourse(res.data);
 
         dispatch(stopLoading());
@@ -46,7 +46,7 @@ const Course = () => {
       }
     };
     fetchCourse();
-  }, [courseId, dispatch, user._id]);
+  }, [courseId, dispatch, user]);
 
   useEffect(() => {
     if (course && user && user?._id) {
