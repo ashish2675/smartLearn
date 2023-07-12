@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-const user = JSON.parse(localStorage.getItem('user')) || null;
-
 export const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${user?.token}`,
+    Authorization: `Bearer ${
+      JSON.parse(localStorage.getItem('user'))?.token
+        ? JSON.parse(localStorage.getItem('user'))?.token
+        : null
+    }`,
   },
 });
 
