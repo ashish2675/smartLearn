@@ -94,7 +94,7 @@ const Course = () => {
               {isEnrolled ? (
                 <iframe
                   className='w-full aspect-video rounded-md sticky top-20'
-                  src='https://www.youtube.com/embed/35EQXmHKZYs'
+                  src={course.sections[0].videoLink}
                   title='YouTube video player'
                   frameBorder='0'
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
