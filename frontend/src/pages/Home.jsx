@@ -26,7 +26,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className='bg-gray-50'>
+    <div>
       <CarouselSection />
       <Features />
       <div className='container w-[95%] max-w-[1200px] mx-auto py-4'>
