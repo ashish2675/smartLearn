@@ -62,7 +62,7 @@ const CourseCard = ({ c }) => {
         <img
           src={c?.thumbnail}
           alt={c.title}
-          className='block w-full rounded-lg aspect-video h-auto object-cover'
+          className='block w-full rounded-lg aspect-video h-auto '
         />
         <h2 className='text-lg font-semibold my-2'>{c.title}</h2>
       </Link>
