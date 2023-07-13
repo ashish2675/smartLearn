@@ -4,7 +4,14 @@ const User = require('../models/User');
 // Get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-password');
+    let users = [];
+    console.log('type: ', req.query.type);
+    if (req.query.type !== '') {
+      console.log('ehere... ');
+      users = await User.find({ role: req.query.type }).select('-password');
+    } else {
+      users = await User.find().select('-password');
+    }
 
     return res.status(200).json(users);
   } catch (error) {
@@ -26,7 +33,7 @@ exports.getUserById = async (req, res) => {
       });
     }
     user.password = undefined;
-    res.json(user);
+    return res.status(200).json(user);
   } catch (error) {
     console.error('Get user by ID error:', error);
     res.status(500).json({
@@ -69,12 +76,45 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { userId } = req.params;
+    const loggedInUserId = req.user._id;
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) {
       return res.status(404).json({
         message: 'User not found',
       });
     }
+
+    // Pull the user ID from the enrolledUsers array in the Course model
+    await Course.updateMany(
+      { enrolledUsers: userId },
+      { $pull: { enrolledUsers: userId } }
+    );
+
+    // Find the courses created by the user
+    const coursesToDelete = await Course.find({ author: userId });
+
+    // Delete the courses created by the user
+    await Course.deleteMany({ author: userId });
+
+    // Update the logged-in user's enrolledCourses array
+    await User.updateOne(
+      { _id: loggedInUserId },
+      {
+        $pull: {
+          enrolledCourses: { $in: coursesToDelete.map((course) => course._id) },
+        },
+      }
+    );
+
+    // Update the logged-in user's wishlist array
+    await User.updateOne(
+      { _id: loggedInUserId },
+      {
+        $pull: {
+          wishlist: { $in: coursesToDelete.map((course) => course._id) },
+        },
+      }
+    );
 
     return res.status(200).json({
       message: 'User deleted successfully',
@@ -166,9 +206,9 @@ exports.getWishList = async (req, res) => {
 
     return res.status(200).json(user.wishlist);
   } catch (error) {
-    console.error('Get all courses error:', error);
+    console.error('Get wishlist error:', error);
     res.status(500).json({
-      message: 'An error occurred while fetching courses',
+      message: 'An error occurred while fetching wishlist',
     });
   }
 };
@@ -189,6 +229,7 @@ exports.addToWishList = async (req, res) => {
     });
   }
 };
+
 // Remove from wishlist
 exports.removeFromWishList = async (req, res) => {
   try {
