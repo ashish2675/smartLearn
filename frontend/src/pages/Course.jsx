@@ -17,14 +17,21 @@ const Course = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const props = { openModal, setOpenModal };
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+
+  const changeVideo = (index) => {
+    setActiveVideoIndex(index);
+  };
 
   const handleEnroll = async (courseId) => {
     try {
       const res = await enrollCourse(courseId);
-      console.log(res);
+      // console.log(res);
 
       if (res.status === 200) {
-        window.location.reload();
+        // window.location.reload();
+        setIsEnrolled(true);
+        props.setOpenModal(undefined);
       }
     } catch (error) {
       console.log(error.response);
@@ -55,7 +62,7 @@ const Course = () => {
     }
   }, [course, user]);
 
-  console.log('enrolled: ', isEnrolled);
+  // console.log('enrolled: ', isEnrolled);
 
   if (loading) {
     return (
@@ -94,7 +101,7 @@ const Course = () => {
               {isEnrolled ? (
                 <iframe
                   className='w-full aspect-video rounded-md sticky top-20'
-                  src={course.sections[0].videoLink}
+                  src={course.sections[activeVideoIndex].videoLink}
                   title='YouTube video player'
                   frameBorder='0'
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
@@ -175,8 +182,13 @@ const Course = () => {
               <h1 className='text-xl mb-2'>Course curriculum</h1>
               {course.sections.map((s, i) => (
                 <li
+                  onClick={() => changeVideo(i)}
                   key={i}
-                  className='flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100'
+                  className={
+                    activeVideoIndex === i
+                      ? 'flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100 bg-purple-200'
+                      : 'flex gap-4 p-3 cursor-pointer rounded-md hover:bg-purple-100 '
+                  }
                 >
                   <div className='w-12 h-12 rounded-md bg-purple-600 text-white flex justify-center items-center'>
                     {i + 1}
