@@ -20,6 +20,8 @@ import AuthorEditCourse from '../pages/author/AuthorEditCourse';
 import MyCourses from '../pages/MyCourses';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
+import AdminUserEdit from '../pages/admin/AdminUserEdit';
+import AdminCourseEdit from '../pages/admin/AdminCourseEdit';
 
 const router = createBrowserRouter([
   {
@@ -87,6 +89,14 @@ const router = createBrowserRouter([
           {
             path: 'authors',
             element: <ManageAuthors />,
+          },
+          {
+            path: 'edit-user/:userId',
+            element: <AdminUserEdit />,
+          },
+          {
+            path: 'edit-course/:courseId',
+            element: <AdminCourseEdit />,
           },
           {
             path: 'courses',
