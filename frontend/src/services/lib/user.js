@@ -21,3 +21,15 @@ export const getMyCourses = () => {
 export const getAllUsers = (type) => {
   return axiosClient.get(`/users?type=${type}`);
 };
+
+export const getUser = (userId) => {
+  return axiosClient.get(`/users/${userId}`);
+};
+
+export const updateUser = (userId, data) => {
+  return axiosClient.put(`/users/${userId}`, data);
+};
+
+export const deleteUser = (userId) => {
+  return axiosClient.delete(`/users/${userId}`);
+};
