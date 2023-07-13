@@ -76,7 +76,7 @@ const Header = () => {
                 {user?.role === 'admin' ? (
                   <li>
                     <NavLink
-                      to='author'
+                      to='admin'
                       className={({ isActive }) =>
                         isActive ? 'text-purple-600' : 'text-gray-700'
                       }
