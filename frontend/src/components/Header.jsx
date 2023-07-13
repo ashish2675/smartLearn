@@ -58,17 +58,36 @@ const Header = () => {
                     Wishlist
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink
-                    to='cart'
-                    className={({ isActive }) =>
-                      isActive ? 'text-purple-600' : 'text-gray-700'
-                    }
-                    end
-                  >
-                    Cart
-                  </NavLink>
-                </li> */}
+                {user?.role === 'author' ? (
+                  <li>
+                    <NavLink
+                      to='author'
+                      className={({ isActive }) =>
+                        isActive ? 'text-purple-600' : 'text-gray-700'
+                      }
+                      end
+                    >
+                      Author Dashboard
+                    </NavLink>
+                  </li>
+                ) : (
+                  ''
+                )}
+                {user?.role === 'admin' ? (
+                  <li>
+                    <NavLink
+                      to='author'
+                      className={({ isActive }) =>
+                        isActive ? 'text-purple-600' : 'text-gray-700'
+                      }
+                      end
+                    >
+                      Admin Dashboard
+                    </NavLink>
+                  </li>
+                ) : (
+                  ''
+                )}
               </>
             ) : (
               <>
