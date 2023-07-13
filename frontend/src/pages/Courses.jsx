@@ -29,7 +29,7 @@ const Courses = () => {
       try {
         dispatch(startLoading());
         const res = await getAllCourses(searchParams.get('category'));
-        console.log(res);
+        // console.log(res);
 
         if (res.status === 200 && res.data) {
           setCoursesData(res.data);

@@ -34,7 +34,7 @@ const ManageCourses = () => {
       try {
         dispatch(startLoading());
         const res = await getAllCourses();
-        console.log(res);
+        // console.log(res);
 
         if (res.status === 200) setCourses(res.data);
         dispatch(stopLoading());
@@ -127,7 +127,7 @@ const ManageCourses = () => {
                 <td className='py-4 col-span-1'>{c.price}</td>
                 <td className='py-4 col-span-2'>{c.description}</td>
                 <td className='py-4 col-span-1'>
-                  <Link to={`/author/edit-course/${c._id}`}>
+                  <Link to={`/admin/edit-course/${c._id}`}>
                     <button className='bg-green-700 text-white p-2 px-4 rounded-md'>
                       Edit
                     </button>

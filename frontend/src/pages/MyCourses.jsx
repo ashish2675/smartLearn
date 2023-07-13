@@ -13,7 +13,7 @@ const MyCourses = () => {
       try {
         dispatch(startLoading());
         const res = await getMyCourses();
-        console.log(res);
+        // console.log(res);
 
         if (res.status === 200 && res.data) {
           setCoursesData(res.data);
