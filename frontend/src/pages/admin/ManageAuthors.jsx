@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { startLoading, stopLoading } from '../../reducres/authReducers';
-import { getAllUsers } from '../../services/lib/user';
+import { deleteUser, getAllUsers } from '../../services/lib/user';
 
 const ManageAuthors = () => {
   const {
-    state: { user, loading },
+    state: { loading },
     dispatch,
   } = useAuth();
   const [users, setUsers] = useState([]);
@@ -17,12 +17,12 @@ const ManageAuthors = () => {
 
   const handleDelete = async (userId) => {
     try {
-      // const res = await deleteCourse(courseId);
-      // if (res.status === 200) {
-      //   props.setOpenModal(undefined);
-      //   let updatedCourses = courses.filter((c) => c._id !== courseId);
-      //   setCourses(updatedCourses);
-      // }
+      const res = await deleteUser(userId);
+      if (res.status === 200) {
+        props.setOpenModal(undefined);
+        let updatedCourses = users.filter((c) => c._id !== userId);
+        setUsers(updatedCourses);
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -33,7 +33,7 @@ const ManageAuthors = () => {
       dispatch(startLoading());
       try {
         const res = await getAllUsers('author');
-        console.log(res);
+        // console.log(res);
 
         if (res.status && res.data) {
           setUsers(res.data);
@@ -92,8 +92,9 @@ const ManageAuthors = () => {
               <th className='col-span-1 py-4'>No</th>
               <th className='col-span-1 py-4'>Name</th>
               <th className='col-span-1 py-4'>Email</th>
+              <th className='col-span-1 py-4'>Picture</th>
               <th className='col-span-1 py-4'>Role</th>
-              <th className='col-span-2 py-4'>Description</th>
+              <th className='col-span-1 py-4'>Description</th>
               <th className='col-span-1 py-4'>Edit</th>
               <th className='col-span-1 py-4'>Delete</th>
             </tr>
@@ -106,24 +107,24 @@ const ManageAuthors = () => {
               >
                 <td className='py-4 col-span-1'>{i + 1}</td>
                 <td className='py-4 col-span-1 capitalize'>{c.name}</td>
+                <td className='py-4 col-span-1'>{c.email}</td>
                 <td className='py-4 col-span-1'>
-                  {/* {c.thumbnail ? (
+                  {c.profilePic ? (
                     <img
-                      src={c.thumbnail}
-                      className='w-24 aspect-video mx-auto rounded-md'
+                      src={c.profilePic}
+                      className='w-12 h-auto aspect-square mx-auto rounded-full'
                       alt={c.title}
                     />
                   ) : (
                     'No image'
-                  )} */}
-                  {c.email}
+                  )}
                 </td>
                 <td className='py-4 col-span-1'>{c.role}</td>
-                <td className='py-4 col-span-2'>
+                <td className='py-4 col-span-1'>
                   {c?.description ? c.description : 'null'}
                 </td>
                 <td className='py-4 col-span-1'>
-                  <Link to={`/author/edit-course/${c._id}`}>
+                  <Link to={`/admin/edit-user/${c._id}`}>
                     <button className='bg-green-700 text-white p-2 px-4 rounded-md'>
                       Edit
                     </button>
@@ -147,7 +148,7 @@ const ManageAuthors = () => {
                   <Modal.Body>
                     <div className='text-center'>
                       <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
-                        Are you sure you want to delete this course?
+                        Are you sure you want to delete this author?
                       </h3>
                       <div className='flex justify-center gap-4'>
                         <Button
